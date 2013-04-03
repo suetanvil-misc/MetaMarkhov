@@ -34,13 +34,13 @@ class TextGenerator
   def starting_word
     @data.keys.sample
   end
-
+  
   def terminal?(word)
     [".", "?", "!"].include?(word)
   end
 
   def punctuation?(word)
-    [".", ",", "?", "!"].include?(word)
+    [".", "?", "!", ","].include?(word)
   end
 
   def append_word(words, word)
