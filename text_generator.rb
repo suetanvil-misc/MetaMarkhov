@@ -29,19 +29,14 @@ class TextGenerator
   def generate(minimum_length)
     words = []
     last_word = nil
-    count = 0
-    terminal = false
-    until count > minimum_length && terminal
-      word = follow(last_word)
-      terminal = terminal?(word)
-      if punctuation?(word)
-        words.last << word
-        last_word = nil
+    until words.count > minimum_length && terminal?(last_word)
+      next_word = follow(last_word)
+      if punctuation?(next_word)
+        words.last << next_word
       else
-        words << word
-        last_word = word.dup
-        count += 1
+        words << next_word
       end
+      last_word = next_word
     end
     words.join(" ")
   end
