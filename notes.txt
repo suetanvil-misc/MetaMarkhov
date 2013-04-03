@@ -1,0 +1,34 @@
+
+Goals:
+
+    -parser
+        -split the text into words and feed it to the chain
+    -Markhov Chain structure
+
+    -code generator.
+        -result must work on stock Ruby.
+
+{
+    "word": [
+        ["next", 0.02],
+        ["following", 0.3],
+        ...
+    ]
+}
+
+
+---------------------------------------------------------------------------
+
+Markhov builder API
+
+The class:
+    b = Builder.new()       
+        
+Adding words:
+    addWord(<word>)
+        <word> must be a word OR newline (for paragraph break).
+
+    extrude(<filename>)
+        <filename> is a ruby program name minus '.rb'.
+        Writes the generator to <filename>.
+
