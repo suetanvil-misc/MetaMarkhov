@@ -15,17 +15,19 @@ class TextGenerator
 
   def follow(word)
     return starting_word if word.nil?
-    raise "#{word} does not have an entry in the dataset" unless @data.keys.include?(word)
-    weighted_list = @data[word]
-    value = Kernel.rand
-    weighted_list.each do |(word, weighting)|
-      value -= weighting
-      return word if value <= 0
-    end
-    weighted_list.last.first
+    select_word(@data.fetch(word))
   end
 
   private
+
+  def select_word(weighted_list)
+    value = Kernel.rand
+    weighted_list.each do |(word, weighting)|
+      value -= weighting
+      return word if value < 0
+    end
+    weighted_list.last.first
+  end
 
   # kind of a lame way, perhaps we could go by how
   # frequently words start sentences?
