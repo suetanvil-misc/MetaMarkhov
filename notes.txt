@@ -29,6 +29,6 @@ Adding words:
         <word> must be a word OR newline (for paragraph break).
 
     extrude(<filename>)
-        <filename> is a ruby program name minus '.rb'.
+        <filename> is a ruby program name optionally minus '.rb'.
         Writes the generator to <filename>.
 
