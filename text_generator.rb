@@ -10,34 +10,40 @@ class TextGenerator
     value = Kernel.rand
     weighted_list.each do |(word, weighting)|
       value -= weighting
-      return word if value <= 0.00001
+      return word if value <= 0
     end
+    weighted_list.last.first
   end
 
+  # kind of a lame way, perhaps we could go by how
+  # frequently words start sentences?
   def starting_word
     @data.keys.sample
   end
 
   def terminal?(word)
-    punctuation?(word)
+    ["."].include?(word)
   end
 
   def punctuation?(word)
-    word == "."
+    [".", ","].include?(word)
   end
 
   def generate(minimum_length)
     words = []
-    last_word = nil
-    until words.count > minimum_length && terminal?(last_word)
-      next_word = follow(last_word)
-      if punctuation?(next_word)
-        words.last << next_word
-      else
-        words << next_word
-      end
-      last_word = next_word
+    word = nil
+    until words.count >= minimum_length && terminal?(word)
+      word = follow(word)
+      append_word(words, word)
     end
     words.join(" ")
+  end
+
+  def append_word(words, word)
+    if punctuation?(word)
+      words.last << word
+    else
+      words << word
+    end
   end
 end

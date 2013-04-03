@@ -3,13 +3,11 @@ require_relative "spec_helper"
 describe TextGenerator do
   let(:t) do
     TextGenerator.new({
-      "word" => [["word", 1]],
-      "car" => [["race", 0.5],
-        ["show", 0.5]],
-      "puppy" => [["car", 0.7],
-        [".", 0.3]],
-       "race" => [["puppy", 1]],
-       "." => [["puppy", 1]]
+      "word" =>  [["word", 1]],
+      "car" =>   [["race", 0.5], ["show", 0.5]],
+      "puppy" => [["car", 0.7],  [".", 0.3]],
+      "race" =>  [["puppy", 1]],
+      "." =>     [["puppy", 1]]
     })
   end
 
@@ -30,10 +28,17 @@ describe TextGenerator do
   end
 
   describe "#generate" do
-    it "creates a phrase for a given data set" do
+    before :each do
       Array.any_instance.stub(:sample).and_return("puppy")
       Kernel.should_receive(:rand).and_return(0,0,0,1)
-      t.generate(3).should == "puppy car race puppy."
+    end
+
+    it "creates a phrase for a given data set" do
+      t.generate(4).should == "puppy car race puppy."
+    end
+
+    it "will only end on a terminal" do
+      t.generate(2).should == "puppy car race puppy."
     end
   end
 end
