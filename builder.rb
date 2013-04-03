@@ -13,6 +13,19 @@ class WordEntry
     @counts[word] = 0 unless @counts.has_key?(word)
     @counts[word] += 1
   end
+
+  def normalizedCounts
+    total = totalCounts() + 0.0
+
+    result = counts.keys.map {|k| [k, @counts[k]] }
+    result.sort! {|a b| a[1] <=> b[1]}
+    result.map! {|entry| entry[1] = entry[1]/total}
+
+    return result
+  end
+
+  private
+
 end
 
 
@@ -29,7 +42,9 @@ class MCBuilder
 
   def extrude(filename)
     filename += '.rb' unless filename.end_with?('.rb')
-    puts "Extruding to '#{filename}'"
+
+    bigHash = createDataHash()
+    writeBigHash(bigHash, filename)
   end
 
   private
@@ -41,6 +56,20 @@ class MCBuilder
   def entryFor(theWord)
     @words[theWord] = WordEntry.new(theWord) unless @words.has_key?(theWord)
     return @words[theWord]
+  end
+
+  def createDataHash
+    result = {}
+
+    for k in @words.keys
+      result[k] = @words[k].normalizedCounts()
+    end
+
+    return result
+  end
+
+  def writeBigHash(bigHash, filename)
+    # Code goes here
   end
 end
 
