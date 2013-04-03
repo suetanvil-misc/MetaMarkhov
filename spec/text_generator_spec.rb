@@ -30,7 +30,7 @@ describe TextGenerator do
   describe "#generate" do
     before :each do
       Array.any_instance.stub(:sample).and_return("puppy")
-      Kernel.should_receive(:rand).and_return(0,0,0,1)
+      Kernel.should_receive(:rand).and_return(0,0,0,0.99)
     end
 
     it "creates a phrase for a given data set" do
