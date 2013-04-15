@@ -24,11 +24,16 @@ class WordEntry
     return result
   end
 
-  private
-
   def totalCounts
     return @counts.values.inject(0) {|memo, cnt| memo + cnt}
   end
+
+  # Return the list (sorted) of words following this word
+  def followers
+    result = @counts.keys.sort! {|a, b| a <=> b}
+  end
+
+  private
 
 end
 
@@ -49,6 +54,19 @@ class MCBuilder
 
     bigHash = createDataHash()
     writeBigHash(bigHash, filename)
+  end
+
+  #
+  # Queries for testing (mostly):
+  #
+
+  def knows?(word)
+    return @words.has_key?(word)
+  end
+
+  def followers(word)
+    return [] unless @words[word]
+    return @words[word].followers
   end
 
   private
