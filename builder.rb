@@ -1,5 +1,5 @@
+# Build the Markhov chain generator
 
-# Builder class skeleton
 
 class WordEntry
   attr_reader :word
@@ -18,13 +18,17 @@ class WordEntry
     total = totalCounts() + 0.0
 
     result = counts.keys.map {|k| [k, @counts[k]] }
-    result.sort! {|a b| a[1] <=> b[1]}
+    result.sort! {|a, b| a[1] <=> b[1]}
     result.map! {|entry| entry[1] = entry[1]/total}
 
     return result
   end
 
   private
+
+  def totalCounts
+    return @counts.values.inject(0) {|memo, cnt| memo + cnt}
+  end
 
 end
 
