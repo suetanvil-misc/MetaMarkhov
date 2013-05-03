@@ -9,7 +9,7 @@ class WordEntry
     @counts = {}
   end
 
-  def follow(word)
+  def followedBy(word)
     @counts[word] = 0 unless @counts.has_key?(word)
     @counts[word] += 1
   end
@@ -17,9 +17,9 @@ class WordEntry
   def normalizedCounts
     total = totalCounts() + 0.0
 
-    result = counts.keys.map {|k| [k, @counts[k]] }
+    result = @counts.keys.map {|k| [k, @counts[k]] }
     result.sort! {|a, b| a[1] <=> b[1]}
-    result.map! {|entry| entry[1] = entry[1]/total}
+    result.map! {|entry| [entry[0], entry[1]/total]}
 
     return result
   end
@@ -45,7 +45,7 @@ class MCBuilder
   end
 
   def addWord(theWord)
-    @lastWord.follow(theWord) if @lastWord
+    @lastWord.followedBy(theWord) if @lastWord
     @lastWord = entryFor(theWord)
   end
 

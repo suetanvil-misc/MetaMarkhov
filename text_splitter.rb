@@ -68,7 +68,7 @@ class TextParse
   
 =end
 
-require "pry"
+#require "pry"
     
 class TextSplitter
   
