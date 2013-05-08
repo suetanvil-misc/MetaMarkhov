@@ -41,12 +41,11 @@ end
 class MCBuilder
   def initialize()
     @words = {}
-    @lastWord = nil
   end
 
-  def addWord(theWord)
-    @lastWord.followedBy(theWord) if @lastWord
-    @lastWord = entryFor(theWord)
+  def addWordPair(firstWord, secondWord)
+    entry = entryFor(firstWord)
+    entry.followedBy(secondWord)
   end
 
   def extrude(filename)
@@ -70,10 +69,6 @@ class MCBuilder
   end
 
   private
-
-  def addFirstWord(theWord)
-    @lastWord = entryFor(theWord)
-  end
 
   def entryFor(theWord)
     @words[theWord] = WordEntry.new(theWord) unless @words.has_key?(theWord)

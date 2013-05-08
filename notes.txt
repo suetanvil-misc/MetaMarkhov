@@ -25,7 +25,8 @@ The class:
     b = Builder.new()       
         
 Adding words:
-    addWord(<word>)
+    addWordPair(<first word>, <following word>)
+        Adds an entry for a sequence of two words.  Each
         <word> must be a word OR newline (for paragraph break).
 
     extrude(<filename>)
